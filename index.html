@@ -170,6 +170,12 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
 .ba td:first-child{color:var(--muted);white-space:nowrap;font-weight:600}
 .ba td:last-child{font-weight:600}
 .nw{white-space:nowrap}
+.qmatrix th,.qmatrix td{text-align:center}
+.qmatrix td,.qmatrix td:last-child{font-weight:500;color:var(--muted)}
+.qmatrix tbody th{font-weight:700;background:var(--surface-2);font-size:13px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.qmatrix tbody tr:last-child th{border-bottom:0}
+.qmatrix td.base{color:var(--accent-ink);font-weight:700;background:var(--accent-soft)}
+.qmatrix td.joint{color:var(--text);font-weight:600}
 
 /* compact cards */
 .mini-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start}
@@ -253,6 +259,12 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   .skill-row{grid-template-columns:1fr;gap:8px}
   .br-d{display:none}
 }
+@media (max-width:480px){
+  .brand{display:none}
+  .nav-links{margin-left:0}
+  .nav-links a{font-size:13px;padding:6px}
+  .qmatrix th,.qmatrix td{padding:8px 6px}
+}
 @media (max-width:420px){
   .steps{grid-template-columns:1fr}
 }
@@ -273,6 +285,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     <a class="brand" href="#top">김대균</a>
     <div class="nav-links">
       <a href="#projects">프로젝트</a>
+      <a href="#research">연구</a>
       <a href="#opensource">오픈소스</a>
       <a href="#approach">일하는 방식</a>
       <a href="#skills">기술</a>
@@ -336,8 +349,8 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     </div>
     <div class="strength">
       <h3>서빙 · 운영</h3>
-      <p>ONNX 변환으로 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐습니다.</p>
-      <div class="refs"><a href="#p-pipeline">교과서 PDF 파이프라인</a><a href="#p-pron">ONNX 서빙</a><a href="#repo-finllm">vLLM 실측</a></div>
+      <p>ONNX 변환으로 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐고, 석사 연구에서는 STT와 LLM을 GPU 한 장에 함께 올리는 양자화 조합을 비교합니다.</p>
+      <div class="refs"><a href="#p-pipeline">교과서 PDF 파이프라인</a><a href="#p-pron">ONNX 서빙</a><a href="#repo-finllm">vLLM 실측</a><a href="#p-thesis">석사 연구</a></div>
     </div>
     <div class="strength wide" id="s-security">
       <h3>보안 · 안전 설계</h3>
@@ -522,6 +535,58 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   </div>
 </section>
 
+<section class="wrap section" id="research" aria-labelledby="research-h">
+  <div class="section-head">
+    <h2 id="research-h">석사 연구</h2>
+    <p>서강대학교 AI·SW대학원 석사 논문 연구입니다. 연구 설계 가운데 시스템 구조와 실험 인프라를 정리했습니다.</p>
+  </div>
+
+  <article class="project" id="p-thesis">
+    <div class="p-head">
+      <div>
+        <p class="p-kicker">서강대학교 AI·SW대학원 · 데이터사이언스·인공지능 전공</p>
+        <h3>한국어 금융 발화 처리에서 음성·언어 모델의 공동 양자화에 따른 자원·품질·지연 절충 연구</h3>
+      </div>
+      <span class="badge">석사 논문</span>
+    </div>
+    <p class="p-summary">상담원 발화를 실시간으로 인식해 불완전판매 위험 발화 후보를 관리자에게 알리는 시스템에서, 음성인식(STT)과 LLM을 GPU 한 장에 함께 올릴 때 양자화 조합이 메모리·품질·지연을 어떻게 바꾸는지 측정합니다.</p>
+    <div class="flow" role="group" aria-label="실시간 처리 흐름">
+      <div class="flow-title">실시간 처리 흐름</div>
+      <div class="step">음성 입력<small>16kHz · 20ms 프레임 WebSocket · Silero VAD 발화 검출</small></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="step key">STT<small>Qwen3-ASR-1.7B + LoRA</small></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="step">1차 규칙 선별<small>명확한 정상 발화는 LLM 호출 생략</small></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="step key">LLM 판정<small>Gemma 2 9B · vLLM · JSON 출력 검사</small></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="step">관리자 경보<small>위험 발화 후보 표시</small></div>
+    </div>
+    <div class="table-wrap">
+      <table class="ba qmatrix">
+        <caption>공동 양자화 비교 설계 · RTX A6000 1장에 STT·LLM 동시 적재, 9개 조합</caption>
+        <thead><tr><th scope="col">STT \ LLM</th><th scope="col">BF16</th><th scope="col">W8A8</th><th scope="col">AWQ W4A16</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">BF16</th><td class="base">기준</td><td>LLM 단독</td><td>LLM 단독</td></tr>
+          <tr><th scope="row">INT8</th><td>STT 단독</td><td class="joint">공동</td><td class="joint">공동</td></tr>
+          <tr><th scope="row">NF4</th><td>STT 단독</td><td class="joint">공동</td><td class="joint">공동</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="points">
+      <li><b>단일 GPU 공동 적재</b>추론은 RTX A6000 한 장에 STT와 LLM을 함께 올리고, KV 캐시 2GiB·문맥 4,096토큰·eager 실행을 고정한 채 9개 정밀도 조합을 조건마다 새 프로세스로 3회씩 측정합니다.</li>
+      <li><b>측정 하네스</b>입력 송신·발화 검출·대기·추론·응답 시각을 같은 호스트의 단조 시계로 기록하고, GPU 메모리는 20ms 간격으로 수집합니다. 기동 실패·메모리 부족·출력 실패도 분모에서 빼지 않습니다.</li>
+      <li><b>실시간 부하 시험</b>서버 응답을 기다리지 않는 개방 루프로 음성을 보내 동시 상담 1·2·4개와 STT 배치 1·2·4를 비교합니다. 45분 반복과 2시간 연속 실행을 합쳐 누적 목표 17.5시간 동안 P95·P99 지연, 대기열, 누락을 기록합니다.</li>
+      <li><b>출력 형식 검사</b>LLM은 위험 상태·범주·근거 구절을 JSON으로 내고, 형식·키·값과 근거 문자열이 입력에 실제로 있는지 검사합니다. 1차 규칙 선별은 호출 절감과 누락 위험을 함께 평가합니다.</li>
+      <li><b>학습과 재현성</b>STT LoRA는 A6000 두 장에서 전화·상담 녹음 120.07시간(72,664발화)으로 학습합니다. 자료·코드·설정·출력 해시와 모델·정밀도·캐시·배치 설정을 기록해 결과를 검산할 수 있게 했습니다.</li>
+    </ul>
+    <p class="p-note">연구 설계와 실험 인프라만 정리했습니다. 위험 라벨은 생성형 모델로 만든 참조이며, 실제 상담에서의 판단 정확도를 주장하지 않습니다.</p>
+    <div class="p-foot">
+      <ul class="tags"><li>Qwen3-ASR-1.7B</li><li>LoRA</li><li>Silero VAD</li><li>WebSocket</li><li>vLLM</li><li>Gemma 2 9B</li><li>AWQ · W8A8 · NF4</li><li>RTX A6000</li></ul>
+    </div>
+  </article>
+</section>
+
 <section class="wrap section" id="opensource" aria-labelledby="opensource-h">
   <div class="section-head">
     <h2 id="opensource-h">오픈소스 · 개인 프로젝트</h2>
@@ -622,11 +687,11 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   <div class="skill-table">
     <div class="skill-row">
       <h3>AI 모델 · LLM · RAG</h3>
-      <ul class="tags"><li>PyTorch</li><li>Transformers</li><li>LoRA</li><li>ONNX Runtime</li><li>Gemini · OpenAI API</li><li>Gemma-4-31B</li><li>Whisper</li><li>BGE-M3</li><li>ChromaDB</li><li>구조화 출력 제어</li></ul>
+      <ul class="tags"><li>PyTorch</li><li>Transformers</li><li>LoRA</li><li>ONNX Runtime</li><li>Gemini · OpenAI API</li><li>Gemma-4-31B</li><li>Whisper</li><li>Qwen3-ASR</li><li>Silero VAD</li><li>BGE-M3</li><li>ChromaDB</li><li>구조화 출력 제어</li></ul>
     </div>
     <div class="skill-row">
       <h3>에이전트 · LLM 서빙</h3>
-      <ul class="tags"><li>Tool calling · JSON Schema</li><li>LangGraph</li><li>MCP</li><li>vLLM</li><li>AWQ 양자화</li><li>Prometheus · Grafana</li></ul>
+      <ul class="tags"><li>Tool calling · JSON Schema</li><li>LangGraph</li><li>MCP</li><li>vLLM</li><li>AWQ · W8A8 · NF4 양자화</li><li>Prometheus · Grafana</li></ul>
     </div>
     <div class="skill-row">
       <h3>Python 백엔드 · 파이프라인</h3>
@@ -670,6 +735,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <div class="t-date">2025.03 – 재학 중</div>
       <h3>서강대학교 AI·SW대학원</h3>
       <p>데이터사이언스·인공지능 전공 석사과정</p>
+      <p><a href="#research">논문: 한국어 금융 발화 STT·LLM 공동 양자화 연구 →</a></p>
     </div>
     <div>
       <div class="t-date">2018.03 – 2024.02</div>
