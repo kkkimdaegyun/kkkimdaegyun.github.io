@@ -253,6 +253,11 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   .skill-row{grid-template-columns:1fr;gap:8px}
   .br-d{display:none}
 }
+@media (max-width:480px){
+  .brand{display:none}
+  .nav-links{margin-left:0}
+  .nav-links a{font-size:13px;padding:6px}
+}
 @media (max-width:420px){
   .steps{grid-template-columns:1fr}
 }
@@ -273,6 +278,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     <a class="brand" href="#top">김대균</a>
     <div class="nav-links">
       <a href="#projects">프로젝트</a>
+      <a href="#research">연구</a>
       <a href="#opensource">오픈소스</a>
       <a href="#approach">일하는 방식</a>
       <a href="#skills">기술</a>
@@ -336,8 +342,8 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     </div>
     <div class="strength">
       <h3>서빙 · 운영</h3>
-      <p>ONNX 변환으로 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐습니다.</p>
-      <div class="refs"><a href="#p-pipeline">교과서 PDF 파이프라인</a><a href="#p-pron">ONNX 서빙</a><a href="#repo-finllm">vLLM 실측</a></div>
+      <p>ONNX 변환으로 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐고, 석사 연구에서는 제한된 GPU 온프레미스 환경의 실시간 STT·LLM 다단 추론 자원 효율화를 다룹니다.</p>
+      <div class="refs"><a href="#p-pipeline">교과서 PDF 파이프라인</a><a href="#p-pron">ONNX 서빙</a><a href="#repo-finllm">vLLM 실측</a><a href="#p-thesis">석사 연구</a></div>
     </div>
     <div class="strength wide" id="s-security">
       <h3>보안 · 안전 설계</h3>
@@ -522,6 +528,24 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   </div>
 </section>
 
+<section class="wrap section" id="research" aria-labelledby="research-h">
+  <div class="section-head">
+    <h2 id="research-h">석사 연구</h2>
+    <p>서강대학교 AI·SW대학원에서 일과 병행하며 진행하고 있는 석사 연구입니다.</p>
+  </div>
+
+  <article class="project" id="p-thesis">
+    <div class="p-head">
+      <div>
+        <p class="p-kicker">서강대학교 AI·SW대학원 · 데이터사이언스·인공지능 전공</p>
+        <h3>제한된 GPU 온프레미스 환경의 실시간 STT·LLM 다단 추론 파이프라인 자원 효율화</h3>
+      </div>
+      <span class="badge">진행 중</span>
+    </div>
+    <p class="p-summary">GPU 자원이 제한된 온프레미스 환경에서 음성인식(STT)과 LLM을 여러 단계로 묶어 실시간으로 처리할 때, 자원을 효율적으로 쓰는 방법을 연구하고 있습니다.</p>
+  </article>
+</section>
+
 <section class="wrap section" id="opensource" aria-labelledby="opensource-h">
   <div class="section-head">
     <h2 id="opensource-h">오픈소스 · 개인 프로젝트</h2>
@@ -670,6 +694,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <div class="t-date">2025.03 – 재학 중</div>
       <h3>서강대학교 AI·SW대학원</h3>
       <p>데이터사이언스·인공지능 전공 석사과정</p>
+      <p><a href="#research">연구: 제한된 GPU 온프레미스 STT·LLM 다단 추론 자원 효율화 →</a></p>
     </div>
     <div>
       <div class="t-date">2018.03 – 2024.02</div>
