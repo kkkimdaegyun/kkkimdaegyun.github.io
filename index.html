@@ -320,7 +320,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   <div class="stats">
     <div class="stat"><div class="num">2026.09</div><div class="label">YBM 'Y클라우드'에 AI 수업자료 생성 Agent 상용 공급</div></div>
     <div class="stat"><div class="num">+13.8<small>점</small></div><div class="label">발음 평가 모델 동일 조건 검증 점수 79.7 → 93.5</div></div>
-    <div class="stat"><div class="num">4.8<small>×</small></div><div class="label">5초 발화 CPU 추론 p50 2,733ms → 571ms (ONNX)</div></div>
+    <div class="stat"><div class="num">4.8<small>×</small></div><div class="label">1차 모델 5초 발화 CPU 추론 p50 2,733ms → 571ms (ONNX)</div></div>
     <div class="stat"><div class="num">−44<small>%</small></div><div class="label">결과 재사용으로 PDF 실제 가공량 15,193 → 8,476쪽</div></div>
   </div>
 </section>
@@ -456,7 +456,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <li><b>ONNX 서빙</b>긴 오디오에서 추론 결과가 달라지는 변환 문제를 고치고, 변환 직후 가변 길이 회귀 검증을 자동화했습니다. GPU 유무에 맞춰 동작하는 Docker 컨테이너로 3개 제품 라인에 단일 API를 제공합니다.</li>
       <li><b>정체 원인 추적</b>더 학습할수록 점수가 떨어지자 학습 데이터부터 다시 확인했습니다. AI Hub 이중 전사 '(1)/(일)'의 양쪽이 모두 라벨에 들어가 학습 발화의 18.4%(뉴스는 52.6%)가 틀린 정답을 배우고 있었고, 기준 발음을 학습은 어절마다, 서빙은 문장 전체로 만들고 있었습니다.</li>
       <li><b>모델 교체와 약점 보강</b>라벨 규칙을 새로 만들고 학습에 쓰지 않은 시험셋(뉴스·대화 2,000발화)을 따로 둔 뒤, Wav2Vec 2.0 LoRA에서 w2v-BERT 2.0 전체 파인튜닝으로 바꿨습니다. 약했던 단어 끝 받침은 CTC 강제 정렬로 문장에서 단어 조각 4만 8천 개를 잘라(끝 ㄱ·ㄷ·ㅂ은 3배로) 보강했습니다.</li>
-      <li><b>서빙 버그 14건과 배포 준비</b>점수가 계산되는 경로를 끝까지 따라가 ㅟ/ㅢ 매핑이 뒤바뀐 문제, 모음 늘임 규칙이 '보호'·'시인'의 실제 음절을 지워 47.5점을 주던 문제, 무음·깨진 파일이 채점되거나 서버 오류를 내던 문제 등 14건을 고쳤습니다. 서비스와 같은 Dockerfile 컨테이너에서 API 5개 경로의 응답 형식·오류 처리를 확인하고, 폴더만 바꾸면 되는 배포본과 되돌리기 절차를 만들었습니다.</li>
+      <li><b>서빙 버그 14건과 배포 준비</b>점수가 계산되는 경로를 끝까지 따라가 버그 14건의 원인을 찾아 고쳤습니다. 서비스와 같은 Dockerfile 컨테이너에서 API 5개 경로의 응답 형식·오류 처리를 확인하고, 폴더만 바꾸면 되는 배포본과 되돌리기 절차를 만들었습니다.</li>
       <li><b>긴 녹음 속도</b>w2v-BERT의 상대 위치 어텐션이 ONNX에서 길이×길이 크기의 위치 표를 만들어 29초 녹음이 1차 모델의 4.4배로 느려졌습니다. 변환할 때만 같은 결과를 내는 거리별 계산으로 바꿔(출력 33/33 일치) 1.6배로 줄였고, 짧은 녹음(0.44→0.37초)과 60초 녹음(20.7→17.4초)은 1차 모델보다 빨라졌습니다.</li>
     </ul>
     <div class="p-foot">
