@@ -173,6 +173,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
 
 /* compact cards */
 .mini-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start}
+.mini-grid.cols-2{grid-template-columns:repeat(2,1fr)}
 .mini{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column}
 .mini .p-kicker{font-size:12.5px;margin:0 0 4px}
 .mini h3{font-size:17px;margin:0;line-height:1.4;font-weight:700}
@@ -245,7 +246,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
   .hero{padding-top:48px}
   .section{padding-top:64px}
   .project{padding:20px 18px;border-radius:16px}
-  .mini-grid{grid-template-columns:1fr}
+  .mini-grid,.mini-grid.cols-2{grid-template-columns:1fr}
   .flow{flex-direction:column}
   .step{min-width:0}
   .arrow{transform:rotate(90deg);align-self:flex-start;margin-left:16px}
@@ -341,7 +342,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     </div>
     <div class="strength">
       <h3>서빙 · 운영</h3>
-      <p>ONNX 변환으로 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐고, 석사 연구에서는 제한된 GPU 온프레미스 환경의 실시간 STT·LLM 다단 추론 자원 효율화를 다룹니다.</p>
+      <p>ONNX 변환으로 1차 모델의 5초 발화 CPU 추론을 4.8배 단축했고, FastAPI·Celery·Redis 비동기 파이프라인과 Docker·AWS 배포, 운영 장애 복구까지 맡았습니다. 개인 프로젝트로 vLLM 단일 GPU 서빙 구성을 품질·지연·메모리 실측으로 골랐고, 석사 연구에서는 제한된 GPU 온프레미스 환경의 실시간 STT·LLM 다단 추론 자원 효율화를 다룹니다.</p>
       <div class="refs"><a href="#p-pipeline">교과서 PDF 파이프라인</a><a href="#p-pron">ONNX 서빙</a><a href="#repo-finllm">vLLM 실측</a><a href="#p-thesis">석사 연구</a></div>
     </div>
     <div class="strength wide" id="s-security">
@@ -461,7 +462,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     <div class="p-head">
       <div>
         <p class="p-kicker">㈜에듀템 · 2026.07 – 현재</p>
-        <h3>교과서 PDF 처리 파이프라인 · 평가 루브릭 코드화</h3>
+        <h3>교과서 PDF 처리 파이프라인</h3>
       </div>
       <span class="badge">운영 중</span>
     </div>
@@ -483,7 +484,6 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <li><b>AI는 필요한 단계에만</b>텍스트 규칙으로 먼저 판단하고 남은 경우에만 Gemini를 호출합니다. JSON 스키마·값 범위를 검사하고, AI가 실패했을 때의 동작(쪽번호 기본값 유지, 방향 보정 생략, 단원 범위 수동 확정)을 미리 정했습니다.</li>
       <li><b>중복 처리 제거</b>단원이 전체본의 어느 구간인지 찾아 결과 행과 S3 객체를 공유했습니다. 실제 가공량은 15,193쪽에서 8,476쪽(−44.2%)으로, 페이지 이미지 저장량은 2.53GB에서 1.40GB로 줄었고, 전체본 49권의 운영 평균은 1.92초/쪽입니다.</li>
       <li><b>운영 데이터 누락 복구</b>운영 중 발견한 OCR 데이터 누락의 원인(Celery 재시도 인자 충돌)을 고치고, 회귀 테스트와 소급 복구 도구로 이미 비어 있던 데이터까지 복구했습니다. 단원 파일 373개를 자동 생성했고 추출 실패는 0건입니다(2026.09.27 운영 DB 기준).</li>
-      <li><b>평가 루브릭 코드화</b>기획자가 Excel로 관리하던 평가 루브릭을 정형 Markdown을 거쳐 Python 평가 로직으로 자동 변환해, 비개발 직군과의 협업 병목을 줄였습니다. 연동 과정에서는 협업 중인 백엔드 개발자·퍼블리셔의 IP만 EC2 보안그룹 인바운드 규칙으로 허용했습니다.</li>
     </ul>
     <p class="p-note">15,193쪽은 산출 데이터량이며, 개선 전 전체 처리시간과 비교한 값은 아닙니다.</p>
     <div class="p-foot">
@@ -523,7 +523,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
     </div>
   </article>
 
-  <div class="mini-grid">
+  <div class="mini-grid cols-2">
     <article class="mini">
       <p class="p-kicker">㈜에듀템 · 2026.03 – 04 · 1인</p>
       <h3>영어 회화 미션챗봇</h3>
@@ -541,6 +541,13 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius
       <h3>'모두의 창업' 서비스 AWS 구축</h3>
       <p>서비스에 필요한 리소스를 먼저 파악해 EC2 사양을 고르고 S3·RDS를 직접 구성했습니다. Docker로 배포해 부하 점검을 거쳐 운영했고, 서버를 구성할 때 EC2 보안그룹 인바운드 규칙에 필요한 IP만 허용했습니다.</p>
       <ul class="tags"><li>AWS EC2</li><li>S3</li><li>RDS</li><li>Docker</li></ul>
+    </article>
+    <article class="mini">
+      <p class="p-kicker">㈜에듀템 · 2026</p>
+      <h3>SpeakMatch 평가 루브릭 코드화</h3>
+      <p>TOEIC 스피킹·OPIc·TOEFL 스피킹·IELTS 스피킹 4개 시험을 AI로 채점하는 에듀템의 모의고사 서비스 SpeakMatch에서, 기획자가 Excel로 관리하던 평가 루브릭을 정형 Markdown을 거쳐 Python 평가 로직으로 자동 변환·연동했습니다. 기획자는 익숙한 Excel로 기준을 관리하고, 바뀐 내용은 평가 로직에 반영됩니다. 연동 과정에서는 협업 중인 백엔드 개발자·퍼블리셔의 IP만 EC2 보안그룹 인바운드 규칙으로 허용했습니다.</p>
+      <ul class="tags"><li>Python</li><li>Markdown</li><li>AWS EC2</li></ul>
+      <a class="link" style="margin-top:12px;align-self:flex-start" href="https://speakmatch.co.kr/" target="_blank" rel="noopener">speakmatch.co.kr ↗</a>
     </article>
   </div>
 </section>
